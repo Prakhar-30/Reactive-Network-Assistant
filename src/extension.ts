@@ -5,13 +5,7 @@ import * as vscode from 'vscode';
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  console.log('Congratulations, your extension "reactive-network-assistant" is now active!');
-
-  // Hello World command
-  const helloWorldCommand = vscode.commands.registerCommand('reactive-network-assistant.helloWorld', () => {
-    vscode.window.showInformationMessage('Hello World from Reactive Network Assistant!');
-  });
+  console.log('Reactive Network Assistant extension is now active!');
 
   // Insert Reactive Smart Contract Template
   const createReactiveContractCommand = vscode.commands.registerCommand('reactive.createReactiveContract', () => {
@@ -39,7 +33,14 @@ contract MyReactiveContract is IReactive, AbstractReactive {
     uint256 public counter;
 
     constructor(address service, address _contract, uint256 topic_0) {
-        // Subscription setup here
+        service.subscribe(
+            CHAIN_ID,
+            _contract,
+            topic_0,
+            REACTIVE_IGNORE,
+            REACTIVE_IGNORE,
+            REACTIVE_IGNORE
+        );
     }
 
     function react(
@@ -55,6 +56,45 @@ contract MyReactiveContract is IReactive, AbstractReactive {
     ) external vmOnly {
         // Reaction logic here
     }
+}`;
+      editor.edit(editBuilder => {
+        editBuilder.insert(editor.selection.active, template);
+      });
+    }
+  });
+
+  // Insert Reactive Subscribe Function
+  const createReactiveSubscribeCommand = vscode.commands.registerCommand('reactive.createReactiveSubscribe', () => {
+    const editor = vscode.window.activeTextEditor;
+    if (editor) {
+      const template = `
+function subscribe(address _contract, uint256 topic_0) external {
+    service.subscribe(
+        CHAIN_ID,
+        _contract,
+        topic_0,
+        REACTIVE_IGNORE,
+        REACTIVE_IGNORE,
+        REACTIVE_IGNORE
+    );
+}`;
+      editor.edit(editBuilder => {
+        editBuilder.insert(editor.selection.active, template);
+      });
+    }
+  });
+
+  // Insert Reactive Unsubscribe Function
+  const createReactiveUnsubscribeCommand = vscode.commands.registerCommand('reactive.createReactiveUnsubscribe', () => {
+    const editor = vscode.window.activeTextEditor;
+    if (editor) {
+      const template = `
+function unsubscribe(address _contract, uint256 topic_0) external {
+    service.unsubscribe(
+        CHAIN_ID,
+        _contract,
+        topic_0
+    );
 }`;
       editor.edit(editBuilder => {
         editBuilder.insert(editor.selection.active, template);
@@ -102,27 +142,6 @@ function callback(address sender) external {
     }
   });
 
-  // Insert Reactive Subscribe Function
-  const createReactiveSubscribeCommand = vscode.commands.registerCommand('reactive.createReactiveSubscribe', () => {
-    const editor = vscode.window.activeTextEditor;
-    if (editor) {
-      const template = `
-function subscribe(address _contract, uint256 topic_0) external {
-    service.subscribe(
-        CHAIN_ID,
-        _contract,
-        topic_0,
-        REACTIVE_IGNORE,
-        REACTIVE_IGNORE,
-        REACTIVE_IGNORE
-    );
-}`;
-      editor.edit(editBuilder => {
-        editBuilder.insert(editor.selection.active, template);
-      });
-    }
-  });
-
   // Insert Reactive React Function
   const createReactiveReactCommand = vscode.commands.registerCommand('reactive.createReactiveReact', () => {
     const editor = vscode.window.activeTextEditor;
@@ -147,14 +166,30 @@ function react(
     }
   });
 
+  // Insert Reactive Constants
+  const insertReactiveConstantsCommand = vscode.commands.registerCommand('reactive.insertReactiveConstants', () => {
+    const editor = vscode.window.activeTextEditor;
+    if (editor) {
+      const template = `
+// Reactive Constants
+uint256 constant CHAIN_ID = 1; // Replace with appropriate chain ID
+uint256 constant REACTIVE_IGNORE = type(uint256).max;
+`;
+      editor.edit(editBuilder => {
+        editBuilder.insert(editor.selection.active, template);
+      });
+    }
+  });
+
   // Register all commands
   context.subscriptions.push(
-    helloWorldCommand,
     createReactiveContractCommand,
     createReactiveEventCommand,
     createReactiveCallbackCommand,
     createReactiveSubscribeCommand,
-    createReactiveReactCommand
+    createReactiveReactCommand,
+    createReactiveUnsubscribeCommand,
+    insertReactiveConstantsCommand
   );
 }
 

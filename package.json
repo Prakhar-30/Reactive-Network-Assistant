@@ -45,6 +45,14 @@
       {
         "command": "reactive.createReactiveReact",
         "title": "Insert Reactive React Function"
+      },
+      {
+        "command": "reactive.createReactiveUnsubscribe",
+        "title": "Insert Reactive Unsubscribe Function"
+      },
+      {
+        "command": "reactive.insertReactiveConstants",
+        "title": "Insert Reactive Constants"
       }
     ]
   },

@@ -1,0 +1,154 @@
+{
+    "Reactive Contract Template": {
+        "prefix": "rtemp",
+        "body": [
+            "// SPDX-License-Identifier: UNLICENSED",
+            "pragma solidity >=0.8.0;",
+            "",
+            "import '../../../lib/reactive-lib/src/interfaces/IReactive.sol';",
+            "import '../../../lib/reactive-lib/src/abstract-base/AbstractReactive.sol';",
+            "import '../../../lib/reactive-lib/src/interfaces/ISystemContract.sol';",
+            "import '$1';",
+            "",
+            "contract $2 is IReactive, AbstractReactive {",
+            "    event Event(",
+            "        uint256 indexed chain_id,",
+            "        address indexed _contract,",
+            "        uint256 indexed topic_0,",
+            "        uint256 topic_1,",
+            "        uint256 topic_2,",
+            "        uint256 topic_3,",
+            "        bytes data,",
+            "        uint256 counter",
+            "    );",
+            "",
+            "    uint256 public counter;",
+            "",
+            "    constructor(address service, address _contract, uint256 topic_0) {",
+            "        // Subscription setup here",
+            "    }",
+            "",
+            "    function react(...) external vmOnly {",
+            "        // Reaction logic here",
+            "    }",
+            "}"
+        ],
+        "description": "Scaffold for a Reactive Smart Contract"
+    },
+    "Reactive Constants": {
+        "prefix": "reactive-constants",
+        "body": [
+            "uint256 private constant CHAIN_ID = ${1|11155111,5318008,43114,137|};",
+            "address private constant SERVICE_ADDRESS = ${2:0x0000000000000000000000000000000000FFFFFF};",
+            "uint256 private constant REACTIVE_IGNORE = ${3:0};"
+        ],
+        "description": "Defines Reactive Constants (CHAIN_ID, SERVICE_ADDRESS, etc.)"
+    },
+    "Event Definition": {
+        "prefix": "revent",
+        "body": [
+            "event $1Event(",
+            "    uint256 indexed chain_id,",
+            "    address indexed _contract,",
+            "    uint256 indexed topic_0,",
+            "    uint256 topic_1,",
+            "    uint256 topic_2,",
+            "    uint256 topic_3,",
+            "    bytes data,",
+            "    uint256 counter",
+            ");"
+        ],
+        "description": "Scaffold for a Reactive Event"
+    },
+    "Callback Function": {
+        "prefix": "callback",
+        "body": [
+            "function callback(address sender) external {",
+            "    emit CallbackReceived(",
+            "        tx.origin,",
+            "        msg.sender,",
+            "        sender",
+            "    );",
+            "    // Additional logic here",
+            "}"
+        ],
+        "description": "Scaffold for a Reactive Callback function"
+    },
+    "Subscribe Function": {
+        "prefix": "reactive-subscribe",
+        "body": [
+            "function subscribe(address _contract, uint256 topic_0) external {",
+            "    service.subscribe(",
+            "        CHAIN_ID,",
+            "        _contract,",
+            "        topic_0,",
+            "        REACTIVE_IGNORE,",
+            "        REACTIVE_IGNORE,",
+            "        REACTIVE_IGNORE",
+            "    );",
+            "}"
+        ],
+        "description": "Scaffold for a Reactive Subscribe function"
+    },
+    "Unsubscribe Function": {
+        "prefix": "reactive-unsubscribe",
+        "body": [
+            "function unsubscribe(address _contract, uint256 topic_0) external {",
+            "    service.unsubscribe(",
+            "        CHAIN_ID,",
+            "        _contract,",
+            "        topic_0,",
+            "        REACTIVE_IGNORE,",
+            "        REACTIVE_IGNORE,",
+            "        REACTIVE_IGNORE",
+            "    );",
+            "}"
+        ],
+        "description": "Scaffold for a Reactive Unsubscribe function"
+    },
+    "Constructor with Subscription": {
+        "prefix": "rconstructor",
+        "body": [
+            "constructor(",
+            "    address _service,",
+            "    address _contract,",
+            "    uint256 topic_0,",
+            "    address callback",
+            ") {",
+            "    service = ISystemContract(payable(_service));",
+            "",
+            "    if (!vm) {",
+            "        service.subscribe(",
+            "            CHAIN_ID,",
+            "            _contract,",
+            "            topic_0,",
+            "            REACTIVE_IGNORE,",
+            "            REACTIVE_IGNORE,",
+            "            REACTIVE_IGNORE",
+            "        );",
+            "    }",
+            "    _callback = callback;",
+            "}"
+        ],
+        "description": "Scaffold for Constructor with Subscription"
+    },
+    "React Function": {
+        "prefix": "react",
+        "body": [
+            "function react(",
+            "    uint256 chain_id,",
+            "    address _contract,",
+            "    uint256 topic_0,",
+            "    uint256 topic_1,",
+            "    uint256 topic_2,",
+            "    uint256 topic_3,",
+            "    bytes calldata data,",
+            "    uint256 block_number,",
+            "    uint256 op_code",
+            ") external vmOnly {",
+            "    // Your reactive logic here",
+            "}"
+        ],
+        "description": "Scaffold for a Reactive React function"
+    }
+}
