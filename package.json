@@ -82,5 +82,15 @@
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
     "rimraf": "^5.0.0"
-  }
+  },
+    "publisher": "Prakhar Srivastava",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Prakhar-30/Reactive-Network-Assistant"
+    },
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/Prakhar-30/Reactive-Network-Assistant/issues"
+    },
+    "homepage": "https://github.com/Prakhar-30/Reactive-Network-Assistant#readme"
 }
