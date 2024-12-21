@@ -83,7 +83,7 @@
     "@vscode/test-electron": "^2.4.1",
     "rimraf": "^5.0.0"
   },
-    "publisher": "Prakhar Srivastava",
+    "publisher": "PrakharSrivastava",
     "repository": {
       "type": "git",
       "url": "https://github.com/Prakhar-30/Reactive-Network-Assistant"
